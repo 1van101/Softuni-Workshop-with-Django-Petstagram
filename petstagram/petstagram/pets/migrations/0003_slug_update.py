@@ -15,11 +15,22 @@ def add_slugs(apps, schema_editor):
     Pet.objects.bulk_update(pets, ['slug'])
 
 
+def remove_slugs(apps, schema_editor):
+    Pet = apps.get_model('pets', 'Pet')
+
+    pets = Pet.objects.all()
+
+    for pet in pets:
+        pet.slug = None
+
+    Pet.objects.bulk_update(pets, ['slug'])
+
+
 class Migration(migrations.Migration):
     dependencies = [
         ('pets', '0002_alter_pet_slug'),
     ]
 
     operations = [
-        migrations.RunPython(add_slugs)
+        migrations.RunPython(add_slugs, remove_slugs)
     ]
