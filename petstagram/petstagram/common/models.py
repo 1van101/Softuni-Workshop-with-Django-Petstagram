@@ -19,6 +19,9 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def __str__(self):
+        return f"To photo - {self.to_photo}"
+
     class Meta:
         ordering = ['-datetime_of_publication']
 
