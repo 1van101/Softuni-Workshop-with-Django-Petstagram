@@ -11,6 +11,7 @@ class Photo(models.Model):
     MAX_LOC_LEN = 30
 
     photo = models.ImageField(
+        upload_to='images',
         validators=(
             validate_file_size,
         )

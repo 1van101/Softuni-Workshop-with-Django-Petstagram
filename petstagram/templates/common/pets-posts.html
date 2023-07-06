@@ -1,5 +1,6 @@
 {% load static %}
-{% for photo in photos %}
+{% for photo in all_photos %}
+
     <div class="card">
         <div class="top">
             <!-- User Details and image location -->
@@ -30,7 +31,7 @@
         </div>
         <!-- Post image -->
         <div class="imgBx" id="{{ photo.id }}">
-            <img src="{% static 'images/' %}{{ photo.photo }}" alt="post" class="cover">
+            <img src="{{ photo.photo.url }}" alt="post" class="cover">
         </div>
         <!-- -->
 
@@ -132,10 +133,12 @@
                         <i class="far fa-smile"></i>
                     </h3>
                 </div>
-                <form method="post" action="add comment">
-                    <label for="id_body">Body:</label>
-                    <textarea name="body" cols="40" rows="10" placeholder="Add comment..." maxlength="300"
-                              required="" id="id_body"></textarea>
+
+                <form method="post" action="{% url 'add comment' photo.pk %}">
+
+                    {{ comment_form }}
+                    {% csrf_token %}
+
                     <button type="submit">Post</button>
                 </form>
             </div>

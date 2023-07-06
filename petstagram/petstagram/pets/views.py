@@ -19,11 +19,11 @@ class EditPetView(view.UpdateView):
     form_class = EditPetForm
     success_url = reverse_lazy('show home page')
 
-    def get_object(self, queryset=None):
-        slug = self.kwargs.get('pet_slug')
-        queryset = self.get_queryset()
-        obj = queryset.filter(slug=slug).first()
-        return obj
+    # def get_object(self, queryset=None):
+    #     slug = self.kwargs.get('pet_slug')
+    #     queryset = self.get_queryset()
+    #     obj = queryset.filter(slug=slug).first()
+    #     return obj
 
 
 class DeletePetView(view.DeleteView):
@@ -44,28 +44,17 @@ class DeletePetView(view.DeleteView):
 
         form_kwargs.update(instance=instance)
         return form_kwargs
-# def details_pet(request, username, pet_slug):
-#     pet = Pet.objects.get(slug=pet_slug)
-#     print(pet)
-#     all_photos = pet.photo_set.all()
-#     context = {
-#         'pet': pet,
-#         'all_photos': all_photos,
-#
-#     }
-#     return render(request, 'pets/pet-details-page.html', context=context)
+
 
 class DetailsPetView(view.DetailView):
     model = Pet
     template_name = 'pets/pet-details-page.html'
-    context_object_name = 'pet'
-    slug_url_kwarg = 'pet_slug'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pet = self.get_object()
-        all_photos = pet.photo_set.all()
-        context['all_photos'] = all_photos
+
+        photos = pet.photo_set.all()
+
+        context['photos'] = photos
         return context
-
-
