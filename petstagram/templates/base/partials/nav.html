@@ -7,7 +7,7 @@
                     <img width="50px" src="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}" alt="img1">
                 </a>
 
-                <a class="home" href="#">
+                <a class="home" href="{% url 'show home page' %}">
                     <i>Petstagram</i>
                 </a>
             </div>
@@ -26,6 +26,7 @@
                             <i>Add Photo</i>
                         </a>
                     </li>
+                    {% if not request.user.is_authenticated %}
                     <li class="nav-item">
 
                         <a href="{% url 'login user' %}">
@@ -38,12 +39,20 @@
                             <i>Register</i>
                         </a>
                     </li>
+                    {% else %}
                     <li class="nav-item">
 
-                        <a href="{% url 'details profile' pk=1 %}">
+                        <a href="{% url 'details profile' request.user.pk %}">
                             <i>Profile</i>
                         </a>
                     </li>
+                    <li class="nav-item">
+
+                        <a href="{% url 'logout user' %}">
+                            <i>Logout</i>
+                        </a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

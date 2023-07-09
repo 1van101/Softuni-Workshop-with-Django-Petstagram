@@ -32,11 +32,11 @@ class DeletePetView(view.DeleteView):
     form_class = DeletePetForm
     success_url = reverse_lazy('show home page')
 
-    def get_object(self, queryset=None):
-        slug = self.kwargs.get('pet_slug')
-        queryset = self.get_queryset()
-        obj = queryset.filter(slug=slug).first()
-        return obj
+    # def get_object(self, queryset=None):
+    #     slug = self.kwargs.get('pet_slug')
+    #     queryset = self.get_queryset()
+    #     obj = queryset.filter(slug=slug).first()
+    #     return obj
 
     def get_form_kwargs(self):
         instance = self.get_object()

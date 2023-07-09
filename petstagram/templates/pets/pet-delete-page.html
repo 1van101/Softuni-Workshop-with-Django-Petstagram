@@ -8,7 +8,7 @@
     <div class="edit-delete edit-photo">
         <h2>Delete pet</h2>
         <!-- Starts Delete Pet Form -->
-        <form method="post" action="#">
+        <form method="post" action="{% url 'delete pet' pet.name pet.slug%}">
 
             {{ form.as_p }}
             {% csrf_token %}

@@ -1,11 +1,11 @@
 {% load static %}
-{% for photo in all_photos %}
+{% for photo in photos %}
 
     <div class="card">
         <div class="top">
             <!-- User Details and image location -->
             <div class="userDetails">
-                <a href="profile details">
+                <a href="{% url 'details profile' pk=1%}">
                     <div class="profilepic">
                         <div class="profile_img">
                             <div class="image">

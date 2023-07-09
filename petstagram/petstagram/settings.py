@@ -72,7 +72,7 @@ WSGI_APPLICATION = 'petstagram.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "petstagram_database",
+        "NAME": "petstagram_db",
         "USER": "postgres",
         "PASSWORD": "password123",
         "HOST": "127.0.0.1",
@@ -123,3 +123,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+AUTH_USER_MODEL = 'accounts.PetstagramUser'

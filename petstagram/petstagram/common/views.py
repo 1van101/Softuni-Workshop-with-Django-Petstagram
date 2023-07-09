@@ -21,7 +21,7 @@ def home_page(request):
             all_photos = all_photos.filter(tagged_pets__name__icontains=pet_name).all()
 
     context = {
-        'all_photos': all_photos,
+        'photos': all_photos,
         'comment_form': comment_form,
         'search_form': search_form,
     }

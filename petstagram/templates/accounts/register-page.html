@@ -1,40 +1,37 @@
 {% extends 'base/base.html' %}
-{% load static %}
+{% load custom_filters %}
 
 {% block page_content %}
-<!-- Starts Main Section -->
-<main>
+    <main>
 
-    <!-- Start Register Section -->
-    <div class="login-register-div">
-        <div class="login-register-box">
-            <h1>Petstagram</h1>
+        <div class="login-register-div">
+            <div class="login-register-box">
+                <h1>Petstagram</h1>
 
-            <!-- Start Register Form -->
-            <form action="">
-                <input type="text" placeholder="Username">
+                <form method='post' action="{% url 'register user' %}">
 
-                <input type="email" placeholder="Email">
+                    {% csrf_token %}
 
-                <input type="password" placeholder="Password">
+                    {{ form.username.errors }}
+                    {{ form.email.errors }}
+                    {{ form.password1.errors }}
+                    {{ form.password2.errors }}
 
-                <input type="password" placeholder="Repeat Password">
+                    {{ form.username|placeholder:'Username' }}
+                    {{ form.email|placeholder:'Email' }}
+                    {{ form.password1|placeholder:'Password' }}
+                    {{ form.password2|placeholder:'Repeat password' }}
 
-                <!-- Register Button -->
-                <button type="submit">Register</button>
-            </form>
-            <!-- End Register Form -->
+                    <button type="submit">Register</button>
+                </form>
 
+            </div>
+            <div class="second-option">
+
+                <p>Have an account? <a href="{% url 'login user' %}">Log in</a></p>
+            </div>
         </div>
-        <div class="second-option">
 
-            <!-- Link to Login Page -->
-            <p>Have an account? <a href="{% url 'login user' %}">Log in</a></p>
-        </div>
-    </div>
-    <!-- End Register Section -->
-
-</main>
-<!-- End Main Section -->
+    </main>
 
 {% endblock %}
