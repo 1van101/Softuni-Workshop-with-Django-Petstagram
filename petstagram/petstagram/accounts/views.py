@@ -14,8 +14,7 @@ class UserRegisterView(views.CreateView):
     success_url = reverse_lazy('login user')
 
 
-# def login_user(request):
-#     return render(request, 'accounts/login-page.html')
+
 
 
 class UserLoginView(auth_view.LoginView):
