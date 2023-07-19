@@ -9,7 +9,7 @@ class PetstagramUserCreateForm(UserCreationForm):
         model = PetstagramUser
         fields = ('username', 'email')
 
-    # instead custom_filters.py/placeholder
+    # instead of custom_filters.py/placeholder
 
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)

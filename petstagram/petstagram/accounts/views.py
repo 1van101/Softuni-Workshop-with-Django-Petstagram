@@ -14,9 +14,6 @@ class UserRegisterView(views.CreateView):
     success_url = reverse_lazy('login user')
 
 
-
-
-
 class UserLoginView(auth_view.LoginView):
     form_class = LoginForm
     template_name = 'accounts/login-page.html'
@@ -29,10 +26,6 @@ class UserLogoutView(auth_view.LogoutView):
 
 def details_profile(request, pk):
     return render(request, 'accounts/profile-details-page.html')
-
-
-# def edit_profile(request, pk):
-#     return render(request, 'accounts/profile-edit-page.html')
 
 
 class UserEditView(views.UpdateView):
