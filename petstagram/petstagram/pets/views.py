@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic as view
 
@@ -11,6 +11,12 @@ class AddPetView(view.CreateView):
     form_class = AddPetForm
     # TODO: change success url with correct one
     success_url = reverse_lazy('show home page')
+
+    def form_valid(self, form):
+        pet = form.save(commit=False)
+        pet.user = self.request.user
+        pet.save()
+        return super().form_valid(form)
 
 
 class EditPetView(view.UpdateView):

@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
 
+from petstagram.accounts.models import PetstagramUser
+
 
 class Pet(models.Model):
     MAX_LENGTH = 30
@@ -23,6 +25,10 @@ class Pet(models.Model):
         null=True,
         blank=True,
         editable=False
+    )
+    user = models.ForeignKey(
+        to=PetstagramUser,
+        on_delete=models.CASCADE
     )
 
     def save(self, *args, **kwargs):
