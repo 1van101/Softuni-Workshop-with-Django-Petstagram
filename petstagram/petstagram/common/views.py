@@ -13,6 +13,8 @@ def home_page(request):
     all_photos = Photo.objects.all()
     comment_form = CommentForm()
     search_form = SearchForm()
+    user = request.user
+    all_liked_photos_by_request_user = [like.to_photo_id for like in user.like_set.all()]
 
     if request.method == 'POST':
         search_form = SearchForm(request.POST)
@@ -24,6 +26,7 @@ def home_page(request):
         'photos': all_photos,
         'comment_form': comment_form,
         'search_form': search_form,
+        'all_liked_photos_by_request_user': all_liked_photos_by_request_user
     }
 
     return render(request, 'common/home-page.html', context)
@@ -31,12 +34,12 @@ def home_page(request):
 
 def like_functionality(request, photo_id):
     photo = Photo.objects.get(id=photo_id)
-    liked_obj = Like.objects.filter(to_photo_id=photo_id)
+    liked_obj = Like.objects.filter(to_photo_id=photo_id, user=request.user).first()
 
     if liked_obj:
         liked_obj.delete()
     else:
-        like = Like(to_photo=photo)
+        like = Like(to_photo=photo, user=request.user)
         like.save()
 
     return redirect(request.META['HTTP_REFERER'] + f'#{photo_id}')
@@ -59,7 +62,12 @@ class AddCommentView(view.CreateView):
     def form_valid(self, form):
         photo_id = self.kwargs['photo_id']
         photo = Photo.objects.get(id=photo_id)
-        form.instance.to_photo = photo
+
+        comment = form.save(commit=False)
+        comment.to_photo = photo
+        comment.user = self.request.user
+        comment.save()
+
         return super().form_valid(form)
 
     def get_success_url(self):
