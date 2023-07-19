@@ -5,19 +5,24 @@
         <div class="top">
             <!-- User Details and image location -->
             <div class="userDetails">
-                <a href="{% url 'details profile' pk=1%}">
+                <a href="{% url 'details profile' photo.user.pk %}">
                     <div class="profilepic">
                         <div class="profile_img">
                             <div class="image">
-                                <img src="{% static 'images/person.png' %}" alt="img8">
+                                {% if photo.user.profile_picture %}
+
+                                    <img src="{{ photo.user.profile_picture }}" alt="img8">
+                                {% else %}
+                                    <img src="{% static 'images/person.png' %}" alt="img8">
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </a>
                 <h3>
-                    <a href="{% url 'details profile' pk=1 %}">
+                    <a href="{% url 'details profile' photo.user.pk %}">
                         <!-- if user has first name and last name -->
-                        Diyan Kalaydzhiev
+                        {{ photo.user.get_user_full_name}}
                         <!-- else -->
                         <!-- user username -->
                     </a>
