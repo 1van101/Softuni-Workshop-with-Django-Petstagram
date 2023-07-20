@@ -1,4 +1,6 @@
 {% load static %}
+
+{{ photos }}
 {% for photo in photos %}
 
     <div class="card">
@@ -22,7 +24,7 @@
                 <h3>
                     <a href="{% url 'details profile' photo.user.pk %}">
                         <!-- if user has first name and last name -->
-                        {{ photo.user.get_user_full_name}}
+                        {{ photo.user.get_user_full_name }}
                         <!-- else -->
                         <!-- user username -->
                     </a>
@@ -46,7 +48,7 @@
                 <div class="left">
 								<span class="heart">
 									<a href="{% url 'like functionality' photo.id %}">
-										{% if photo.like_set.all %}
+										{% if photo.id in all_liked_photos_by_request_user %}
                                             <svg style="color: red"
                                                  xmlns="http://www.w3.org/2000/svg"
                                                  width="24"
@@ -87,7 +89,7 @@
                                         </svg>
 								</a>
 								</span>
-                    </span>
+                    {#                    </span>#}
                     <a href="{% url 'share functionality' photo.id %}">
                         <svg aria-label="Share Post" class="_8-yf5 " color="#262626" fill="#262626"
                              height="24" role="img" viewBox="0 0 48 48" width="24">
@@ -110,7 +112,7 @@
 
             {% if  photo.tagged_pets.all %}
                 {% for pet in photo.tagged_pets.all %}
-                    <a href="{% url 'details pet' pet.name pet.slug %}">
+                    <a href="{% url 'details pet' pet.user.username pet.slug %}">
                         <p class="message">
                             <b>{{ pet.name }}</b>
                         </p>

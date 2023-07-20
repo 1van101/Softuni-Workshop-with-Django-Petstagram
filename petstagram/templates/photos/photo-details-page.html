@@ -16,11 +16,15 @@
                         <div class="userDetails">
 
                             <!-- Link to User Profile Details Page-->
-                            <a href="#">
+                            <a href="{% url 'details profile' object.user.pk %}">
                                 <div class="profilepic">
                                     <div class="profile_img">
                                         <div class="image">
-                                            <img src="{% static 'images/person.png' %}" alt="img8">
+                                            {% if object.user.pk %}
+                                                <img src="{{ object.user.profile_picture }}" alt="img8">
+                                            {% else %}
+                                                <img src="{% static 'images/person.png' %}" alt="img8">
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -28,11 +32,8 @@
                             <h3>
 
                                 <!-- Link to User Profile Details Page -->
-                                <a href="#">
-                                    <!-- IF user has first name and last name -->
-                                    Diyan Kalaydzhiev
-                                    <!-- else -->
-                                    <!-- show user username -->
+                                <a href="{% url 'details profile' object.user.pk %}">
+                                    {{object.user.get_user_full_name}}
                                 </a>
                                 <br>
 
@@ -155,7 +156,8 @@
                         <!-- Start Tagged Pets Section-->
                         {% for pet in photo.tagged_pets.all %}
                             <!-- Link to First Tagged Pet Details Page -->
-                            <a href="{% url 'details pet' "username" pet.slug %}">
+
+                            <a href="{% url 'details pet' pet.user.username pet.slug %}">
                                 <p class="message">
                                     <b>{{ pet.name }}</b>
                                 </p>
@@ -172,6 +174,7 @@
 
                         <!-- Start Comments Section -->
                         {% for comment in comments %}
+
                             <div class="comments">
                                 <div class="top">
                                     <div class="userDetails">
@@ -180,14 +183,18 @@
                                                 <div class="profile_img">
                                                     <div class="image">
                                                         <!-- User Profile Image -->
+                                                        {% if comment.user.profile_picture %}
+                                                        <img src="{{comment.user.profile_picture}}" alt="img8">
+                                                        {% else %}
                                                         <img src="{% static 'images/person.png' %}" alt="img8">
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>
                                             <p>
                                                 <!-- Link to User Profile Details Page-->
                                                 <!-- User First and/or Last Name or username-->
-                                                <a href="">Steven Ivanov</a>
+                                                <a href="">{{ comment.user.username }}</a>
                                                 <!-- User Comment -->
                                                 {{ comment.text }}
                                             </p>
