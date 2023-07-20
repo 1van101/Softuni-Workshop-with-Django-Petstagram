@@ -21,6 +21,7 @@ class PetBaseForm(forms.ModelForm):
 class EditPetForm(PetBaseForm):
     pass
 
+
 class DeletePetForm(PetBaseForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -31,8 +32,8 @@ class DeletePetForm(PetBaseForm):
             field.required = False
 
 
-
 class AddPetForm(PetBaseForm):
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic as view
 
+from petstagram.accounts.models import PetstagramUser
 from petstagram.pets.forms import AddPetForm, EditPetForm, DeletePetForm
 from petstagram.pets.models import Pet
 
@@ -9,7 +10,6 @@ from petstagram.pets.models import Pet
 class AddPetView(view.CreateView):
     template_name = 'pets/pet-add-page.html'
     form_class = AddPetForm
-    # TODO: change success url with correct one
     success_url = reverse_lazy('show home page')
 
     def form_valid(self, form):
@@ -57,10 +57,17 @@ class DetailsPetView(view.DetailView):
     template_name = 'pets/pet-details-page.html'
 
     def get_context_data(self, **kwargs):
+        print(kwargs)
         context = super().get_context_data(**kwargs)
         pet = self.get_object()
 
         photos = pet.photo_set.all()
 
-        context['photos'] = photos
+        owner = PetstagramUser.objects.get(username=pet.user.username)
+
+        context.update({
+            'photos': photos,
+            'owner': owner
+        })
+
         return context

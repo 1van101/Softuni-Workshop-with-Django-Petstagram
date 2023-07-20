@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from petstagram.accounts.views import UserRegisterView, UserLoginView, details_profile, delete_profile, \
+from petstagram.accounts.views import UserRegisterView, UserLoginView, UserDetailsView, UserDeleteView, \
     UserLogoutView, UserEditView
 
 urlpatterns = (
@@ -8,9 +8,9 @@ urlpatterns = (
     path('login/', UserLoginView.as_view(), name='login user'),
     path('logout/', UserLogoutView.as_view(), name='logout user'),
     path('profile/<int:pk>/', include([
-        path('', details_profile, name='details profile'),
+        path('', UserDetailsView.as_view(), name='details profile'),
         path('edit/', UserEditView.as_view(), name='edit profile'),
-        path('delete/', delete_profile, name='delete profile'),
+        path('delete/', UserDeleteView.as_view(), name='delete profile'),
     ]))
 )
 

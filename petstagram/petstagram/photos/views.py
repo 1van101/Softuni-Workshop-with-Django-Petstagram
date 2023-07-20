@@ -14,6 +14,11 @@ class AddPhotoView(view.CreateView):
     # TODO replace success url with correct one
     success_url = reverse_lazy('show home page')
 
+    def form_valid(self, form):
+        photo = form.save(commit=False)
+        photo.user = self.request.user
+        photo.save()
+        return super().form_valid(form)
 
 class DetailsPhotoView(view.DetailView):
     template_name = 'photos/photo-details-page.html'
@@ -24,12 +29,14 @@ class DetailsPhotoView(view.DetailView):
         photo = self.get_object()
         likes = photo.like_set.all()
         comments = photo.comment_set.all()
+        photo_is_liked_by_user = likes.filter(user=self.request.user)
 
         context.update({
             'photo': photo,
             'likes': likes,
             'comments': comments,
-            'comment_form': CommentForm()
+            'comment_form': CommentForm(),
+            'photo_is_liked_by_user': photo_is_liked_by_user
         })
         return context
 

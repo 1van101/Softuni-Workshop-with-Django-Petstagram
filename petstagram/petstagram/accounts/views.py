@@ -24,8 +24,20 @@ class UserLogoutView(auth_view.LogoutView):
     next_page = reverse_lazy('login user')
 
 
-def details_profile(request, pk):
-    return render(request, 'accounts/profile-details-page.html')
+class UserDetailsView(views.DetailView):
+    model = PetstagramUser
+    template_name = 'accounts/profile-details-page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        total_likes_count = sum(p.like_set.count() for p in self.object.photo_set.all())
+        is_owner = self.request.user == self.object
+        context.update({
+            'total_likes_count': total_likes_count,
+            'is_owner': is_owner
+        })
+
+        return context
 
 
 class UserEditView(views.UpdateView):
@@ -37,5 +49,7 @@ class UserEditView(views.UpdateView):
         return reverse_lazy('details profile', kwargs={'pk': self.object.pk})
 
 
-def delete_profile(request, pk):
-    return render(request, 'accounts/profile-delete-page.html')
+class UserDeleteView(views.DeleteView):
+    model = PetstagramUser
+    template_name = 'accounts/profile-delete-page.html'
+    success_url = reverse_lazy('show home page')

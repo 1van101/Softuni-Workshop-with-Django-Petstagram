@@ -14,7 +14,8 @@ def home_page(request):
     comment_form = CommentForm()
     search_form = SearchForm()
     user = request.user
-    all_liked_photos_by_request_user = [like.to_photo_id for like in user.like_set.all()]
+    all_liked_photos_by_request_user = [like.to_photo_id for like in
+                                        user.like_set.all()] if user.is_authenticated else []
 
     if request.method == 'POST':
         search_form = SearchForm(request.POST)

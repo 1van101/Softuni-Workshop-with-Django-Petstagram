@@ -6,7 +6,7 @@ from petstagram.photos.models import Photo
 class BasePhotoForm(forms.ModelForm):
     class Meta:
         model = Photo
-        fields = '__all__'
+        fields = ['photo', 'description', 'location', 'tagged_pets']
 
 
 class CreatePhotoForm(BasePhotoForm):
