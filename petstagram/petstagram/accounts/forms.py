@@ -1,12 +1,13 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
-
+from django.contrib.auth import forms as auth_forms, get_user_model
 from petstagram.accounts.models import PetstagramUser
 
+UserModel = get_user_model()
 
-class PetstagramUserCreateForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
-        model = PetstagramUser
+
+class PetstagramUserCreateForm(auth_forms.UserCreationForm):
+    class Meta:
+        model = UserModel
         fields = ('username', 'email')
 
     # instead of custom_filters.py/placeholder
@@ -21,8 +22,15 @@ class PetstagramUserCreateForm(UserCreationForm):
 
 class PetstagramUserEditForm(forms.ModelForm):
     class Meta:
-        model = PetstagramUser
-        fields = ('username', 'first_name', 'last_name', 'email', 'profile_picture', 'gender')
+        model = UserModel
+        fields = (
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'profile_picture',
+            'gender'
+        )
         exclude = ('password',)
         labels = {
             'username': 'Username:',
@@ -34,5 +42,5 @@ class PetstagramUserEditForm(forms.ModelForm):
         }
 
 
-class LoginForm(AuthenticationForm):
+class LoginForm(auth_forms.AuthenticationForm):
     pass

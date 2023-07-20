@@ -2,7 +2,9 @@ from django.db import models
 from django.utils.text import slugify
 
 from petstagram.accounts.models import PetstagramUser
+from django.contrib.auth import get_user_model
 
+UserModel = get_user_model()
 
 class Pet(models.Model):
     MAX_LENGTH = 30
@@ -27,7 +29,7 @@ class Pet(models.Model):
         editable=False
     )
     user = models.ForeignKey(
-        to=PetstagramUser,
+        to=UserModel,
         on_delete=models.CASCADE
     )
 

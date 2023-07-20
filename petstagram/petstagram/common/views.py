@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from pyperclip import copy
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -33,6 +35,7 @@ def home_page(request):
     return render(request, 'common/home-page.html', context)
 
 
+@login_required
 def like_functionality(request, photo_id):
     photo = Photo.objects.get(id=photo_id)
     liked_obj = Like.objects.filter(to_photo_id=photo_id, user=request.user).first()
@@ -56,6 +59,7 @@ def share_functionality(request, photo_id):
     return redirect(request.META['HTTP_REFERER'] + f"#{photo_id}")
 
 
+@method_decorator(login_required, name='dispatch')
 class AddCommentView(view.CreateView):
     model = Comment
     form_class = CommentForm

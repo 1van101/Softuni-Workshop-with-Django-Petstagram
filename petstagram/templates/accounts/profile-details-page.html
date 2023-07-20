@@ -25,24 +25,19 @@
                             <img class="edit-img" src="{% static 'images/edit-pen-icon-6.jpg' %}" alt="edit button">
                         </a>
 
-                        <!-- Link to Delete Profile Page -->
                         <a href="{% url 'delete profile' object.pk %}">
                             <img class="bin-img" src="{% static 'images/icon-remove-22.jpg' %}" alt="bin button">
                         </a>
-                        <!-- End IF the viewer is the owner of the profile -->
                         {% endif %}
                     </div>
                     <div class="data">
 
-                        <!-- Total Number of Photos by the User -->
                         <span>{{ object.photo_set.count }}</span>
                         <p>photos</p>
 
-                        <!-- Total Number of Pets owned by the User -->
                         <span>{{ object.pet_set.count }}</span>
                         <p>pets</p>
 
-                        <!-- Total Number of Likes for the User -->
                         <span>{{ total_likes_count }}</span>
                         <p>likes</p>
                     </div>
@@ -79,9 +74,7 @@
                     {% endfor %}
 
                 </div>
-
             </div>
-
 
             <div class="pet-photos">
             {% for photo in object.photo_set.all %}
@@ -92,12 +85,9 @@
 
             {% endfor %}
             </div>
-            <!-- End Last Uploaded Photos Section -->
 
         </div>
-        <!-- End Profile Details Section -->
 
     </main>
-    <!-- End Main Section -->
 
 {% endblock %}

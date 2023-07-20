@@ -1,11 +1,9 @@
 {% load static %}
 
-{{ photos }}
 {% for photo in photos %}
 
     <div class="card">
         <div class="top">
-            <!-- User Details and image location -->
             <div class="userDetails">
                 <a href="{% url 'details profile' photo.user.pk %}">
                     <div class="profilepic">
@@ -23,10 +21,7 @@
                 </a>
                 <h3>
                     <a href="{% url 'details profile' photo.user.pk %}">
-                        <!-- if user has first name and last name -->
                         {{ photo.user.get_user_full_name }}
-                        <!-- else -->
-                        <!-- user username -->
                     </a>
                     <br>
                     {% if photo.location %}
@@ -36,18 +31,15 @@
             </div>
             <!--  -->
         </div>
-        <!-- Post image -->
         <div class="imgBx" id="{{ photo.id }}">
             <img src="{{ photo.photo.url }}" alt="post" class="cover">
         </div>
-        <!-- -->
-
         <div class="bottom">
-            <!-- like and share buttons -->
             <div class="actionBtns">
                 <div class="left">
 								<span class="heart">
 									<a href="{% url 'like functionality' photo.id %}">
+
 										{% if photo.id in all_liked_photos_by_request_user %}
                                             <svg style="color: red"
                                                  xmlns="http://www.w3.org/2000/svg"
@@ -104,7 +96,6 @@
                     </a>
                 </div>
             </div>
-            <!-- -->
 
             <a href="#">
                 <p class="likes">{{ photo.like_set.count }}</p>
@@ -133,7 +124,6 @@
 
             <h5 class="postTime">{{ photo.date_of_publication }}</h5>
 
-            <!-- add comments section -->
             <div class="addComments">
                 <div class="reaction">
                     <h3>
@@ -149,10 +139,7 @@
                     <button type="submit">Post</button>
                 </form>
             </div>
-            <!--  -->
         </div>
     </div>
 {% endfor %}
-<!-- End  First Pet Photo Post -->
 
-<!-- Start Second Pet Photo Post -->

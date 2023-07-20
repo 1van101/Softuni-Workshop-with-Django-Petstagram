@@ -1,9 +1,12 @@
 from django.core.validators import MinLengthValidator
 from django.db import models
 
-from petstagram.accounts.models import PetstagramUser
 from petstagram.pets.models import Pet
 from petstagram.photos.validators import validate_file_size
+from django.contrib.auth import get_user_model
+
+
+UserModel = get_user_model()
 
 
 class Photo(models.Model):
@@ -37,7 +40,6 @@ class Photo(models.Model):
     )
 
     user = models.ForeignKey(
-        PetstagramUser,
+        UserModel,
         on_delete=models.CASCADE
     )
-

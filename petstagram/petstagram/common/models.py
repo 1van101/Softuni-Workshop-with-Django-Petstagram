@@ -1,8 +1,10 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 from petstagram.accounts.models import PetstagramUser
 from petstagram.photos.models import Photo
 
+UserModel = get_user_model()
 
 class Comment(models.Model):
     MAX_COMM_LEN = 300
@@ -20,7 +22,7 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
     )
     user = models.ForeignKey(
-        PetstagramUser,
+        UserModel,
         on_delete=models.CASCADE
     )
 
@@ -40,6 +42,6 @@ class Like(models.Model):
     )
 
     user = models.ForeignKey(
-        PetstagramUser,
+        UserModel,
         on_delete=models.CASCADE
     )
